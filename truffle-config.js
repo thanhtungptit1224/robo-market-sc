@@ -50,10 +50,10 @@ module.exports = {
         },
         testnet: {
             provider: () => new HDWalletProvider(privateKeyTestnet, 'https://data-seed-prebsc-1-s2.binance.org:8545'),
-            network_id: 97,
-            confirmations: 10,
-            timeoutBlocks: 200,
-            skipDryRun: true
+            network_id: 97
+            // confirmations: 10,
+            // timeoutBlocks: 200,
+            // skipDryRun: true
         },
         bsc: {
             provider: () => new HDWalletProvider(privateKeyMainnet, 'https://bsc-dataseed1.defibit.io'),
