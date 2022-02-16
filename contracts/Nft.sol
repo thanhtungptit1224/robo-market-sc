@@ -33,7 +33,7 @@ contract Nft is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, E
         return super.tokenURI(tokenId);
     }
 
-    function awardItem(address player, string memory tokenURI) public returns (uint256) {
+    function mint(address player, string memory tokenURI) public returns (uint256) {
         _tokenIds.increment();
 
         uint256 newItemId = _tokenIds.current();
