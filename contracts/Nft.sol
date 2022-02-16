@@ -13,7 +13,7 @@ contract Nft is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, E
     CountersUpgradeable.Counter private _tokenIds;
 
     function initialize() initializer public {
-        __ERC721_init("Robox", "Robox");
+        __ERC721_init("Robox", "RBX");
         __Ownable_init();
     }
 
