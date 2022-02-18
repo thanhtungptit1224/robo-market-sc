@@ -41,7 +41,7 @@ contract MarketplaceStorage {
     bytes4 public constant ERC721_Interface = bytes4(0x80ac58cd);
 
     // EVENTS
-    event ItemCreated(
+    event ListItem(
         address indexed sellerAddress,
         address nftAddress,
         uint256 indexed tokenId,

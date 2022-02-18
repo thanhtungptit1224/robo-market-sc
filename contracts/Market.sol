@@ -38,6 +38,6 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         );
         require(_price > 0, "Price should be bigger than 0");
 
-        emit ItemCreated(ownerAddress, nftAddress, _tokenId, _price);
+        emit ListItem(ownerAddress, nftAddress, _tokenId, _price);
     }
 }
