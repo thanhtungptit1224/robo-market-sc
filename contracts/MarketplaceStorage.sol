@@ -22,9 +22,9 @@ contract MarketplaceStorage {
 
     struct ItemOffer {
         // Item ID
-        bytes32 id;
+        uint256 tokenId;
         // Price (in wei) for the published item
-        uint256 offerPrice;
+        uint256 price;
     }
 
     // From ERC721 registry assetId to Item (to avoid asset collision)
@@ -32,8 +32,7 @@ contract MarketplaceStorage {
     mapping(uint256 => Item) items;
 
     // From ERC721 registry assetId to Offer (to avoid asset collision)
-    mapping(address => mapping(uint256 => mapping(address => ItemOffer)))
-    public itemOffers;
+    mapping(uint256 => mapping(address => ItemOffer)) public itemOffers;
 
     address public legacyNFTAddress;
     address public nftAddress;
@@ -69,11 +68,9 @@ contract MarketplaceStorage {
         uint256 totalPrice,
         address indexed buyer
     );
-    event ItemOfferCreated(
-        bytes32 id,
-        uint256 indexed assetId,
+    event OfferItem(
+        uint256 indexed tokenId,
         address indexed seller,
-        address nftAddress,
         uint256 offerPrice,
         address indexed offerer
     );
