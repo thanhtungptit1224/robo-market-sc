@@ -40,4 +40,8 @@ contract Nft is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeable, E
         _mint(to, newItemId);
         _setTokenURI(newItemId, tokenURI);
     }
+
+    function burn(uint tokenId) onlyOwner public {
+        _burn(tokenId);
+    }
 }
