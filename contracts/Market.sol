@@ -86,4 +86,19 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         emit SellItem(_msgSender(), _tokenId, _price);
     }
 
+    function unListItem(uint256 _tokenId) onlyInitializing public {
+        IERC721Upgradeable nft = IERC721Upgradeable(nftAddress);
+        Item memory item       = items[_tokenId];
+
+        require(item.tokenId == ItemStatus.LIST, "NFT is not list");
+        require(
+            nft.ownerOf(_tokenId) == _msgSender(),
+            "The seller is no longer the owner"
+        );
+
+        items[_tokenId].status = ItemStatus.UN_LIST;
+
+        emit UnListItem(_msgSender(), _tokenId);
+    }
+
 }

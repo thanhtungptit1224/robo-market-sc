@@ -6,7 +6,7 @@ contract MarketplaceStorage {
         LIST,
         BOUGHT,
         OFFER,
-        DELIST
+        UN_LIST
     }
 
     struct Item {
@@ -57,11 +57,9 @@ contract MarketplaceStorage {
         uint256 indexed tokenId,
         uint256 price
     );
-    event DelistItemSuccessful(
-        address nftAddress,
-        bytes32 id,
-        uint256 indexed assetId,
-        address indexed delistBuy
+    event UnListItem(
+        address indexed unListBy,
+        uint256 indexed tokenId
     );
     event ItemOfferApproved(
         bytes32 id,
