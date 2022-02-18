@@ -46,24 +46,22 @@ contract MarketplaceStorage {
         uint256 indexed tokenId,
         uint256 price // in wei
     );
-    event DelistItemSuccessful(
-        address nftAddress,
-        bytes32 id,
-        uint256 indexed assetId,
-        address indexed delistBuy
-    );
     event BuyItem(
         address indexed seller,
         uint256 indexed tokenId,
         uint256 price,
         address indexed buyer
     );
-    event SellItemSuccessful(
+    event SellItem(
+        address indexed seller,
+        uint256 indexed tokenId,
+        uint256 price
+    );
+    event DelistItemSuccessful(
         address nftAddress,
         bytes32 id,
         uint256 indexed assetId,
-        uint256 totalPrice,
-        address indexed seller
+        address indexed delistBuy
     );
     event ItemOfferApproved(
         bytes32 id,

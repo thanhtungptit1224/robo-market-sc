@@ -28,8 +28,8 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
 
     // owner listing to other buy. must approve before
     function list(uint256 _tokenId, uint256 _price) onlyInitializing public {
-        IERC721Upgradeable nft = IERC721Upgradeable(nftAddress);
-        address owner = nft.ownerOf(_tokenId);
+        IERC721Upgradeable nft  = IERC721Upgradeable(nftAddress);
+        address owner           = nft.ownerOf(_tokenId);
 
         require(_price > 0, "Price should be bigger than 0");
         require(_msgSender() == owner, "Only the owner can list item");
@@ -40,7 +40,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
 
         items[_tokenId] = Item({
             tokenId: _tokenId,
-            owner : owner,
+            owner  : owner,
             price  : _price,
             status : ItemStatus.LIST
         });
@@ -49,8 +49,8 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
     }
 
     function buyItem(uint256 _tokenId) onlyInitializing public payable {
-        IERC721Upgradeable nft = IERC721Upgradeable(nftAddress);
-        Item memory item = items[_tokenId];
+        IERC721Upgradeable nft  = IERC721Upgradeable(nftAddress);
+        Item memory item        = items[_tokenId];
 
         require(msg.value >= item.price, "Value need equal price");
         require(item.status == ItemStatus.LIST, "Nft is not list to buy");
@@ -62,15 +62,28 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         payable(item.owner).transfer(msg.value);
         nft.safeTransferFrom(item.owner, _msgSender(), _tokenId);
 
-        items[_tokenId].owner = _msgSender();
+        items[_tokenId].owner  = _msgSender();
         items[_tokenId].status = ItemStatus.BOUGHT;
 
-        emit BuyItem(
-            item.owner,
-            _tokenId,
-            item.price,
-            _msgSender()
+        emit BuyItem(item.owner, _tokenId, item.price, _msgSender());
+    }
+
+    function sellItem(uint256 _tokenId, uint256 _price) onlyInitializing public {
+        IERC721Upgradeable nft  = IERC721Upgradeable(nftAddress);
+        Item memory item        = items[_tokenId];
+
+        require(_price > 0, "Price should be bigger than 0");
+        require(item.tokenId != 0, "Asset not published");
+        require(
+            nft.ownerOf(_tokenId) == _msgSender(),
+            "The seller is no longer the owner"
         );
+
+        items[_tokenId].owner  = _msgSender();
+        items[_tokenId].price  = _price;
+        items[_tokenId].status = ItemStatus.LIST;
+
+        emit SellItem(_msgSender(), _tokenId, _price);
     }
 
 }
