@@ -27,19 +27,17 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         require(nft.supportsInterface(ERC721_Interface), "The NFT contract has an invalid ERC721 implementation");
     }
 
-    function list(address _sellerAddress, uint256 _tokenId, uint256 _price) public {
-        require(_sellerAddress != address(0), "Invalid seller address");
-
+    function list(uint256 _tokenId, uint256 _price) onlyInitializing public {
         IERC721Upgradeable nft = IERC721Upgradeable(nftAddress);
         address ownerAddress = nft.ownerOf(_tokenId);
 
-        require(_sellerAddress == ownerAddress, "Only the owner can list item");
+        require(_msgSender() == ownerAddress, "Only the owner can list item");
         require(
             nft.getApproved(_tokenId) == address(this) || nft.isApprovedForAll(ownerAddress, address(this)),
             "The contract is not authorized to manage the nft"
         );
         require(_price > 0, "Price should be bigger than 0");
 
-        emit ItemCreated(_sellerAddress, nftAddress, _tokenId, _price);
+        emit ItemCreated(ownerAddress, nftAddress, _tokenId, _price);
     }
 }
