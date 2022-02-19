@@ -56,7 +56,7 @@ contract("Market", async (accounts) => {
             assert.equal(item.tokenId, tokenId)
             assert.equal(item.owner, accounts[0])
             assert.equal(item.price, web3.utils.toWei('0.1', 'ether'))
-            // assert.equal(item.status.toString(), 'LIST')
+            assert.equal(item.status.toString(), '0') // enum -> follow by index
         })
     })
 });
