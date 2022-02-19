@@ -8,9 +8,9 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
-import "MarketplaceStorage.sol";
+import "Storage.sol";
 
-contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, MarketplaceStorage {
+contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Storage {
 
     function initialize(address _nftAddress) initializer public {
         validateNftAddress(_nftAddress);
