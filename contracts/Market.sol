@@ -101,7 +101,10 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         emit UnListItem(_msgSender(), _tokenId);
     }
 
-    function offerItem(uint256 _tokenId, uint256 _price) onlyInitializing public {
+    // Function to deposit Ether into this contract.
+    // Call this function along with some Ether.
+    // The balance of this contract will be automatically updated.
+    function offerItem(uint256 _tokenId) onlyInitializing public payable {
         IERC721Upgradeable nft  = IERC721Upgradeable(nftAddress);
         Item memory item        = items[_tokenId];
 
@@ -111,19 +114,20 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
             "The seller is no longer the owner"
         );
         require(
-            _price > 0,
+            msg.value > 0,
             "Offer price should be bigger than 0"
         );
 
         itemOffers[_tokenId][_msgSender()] = ItemOffer({
             tokenId: _tokenId,
-            price  : _price,
+            price  : msg.value,
             offerBy: _msgSender()
         });
 
-        emit OfferItem(_tokenId, item.owner, _price, _msgSender());
+        emit OfferItem(_tokenId, item.owner, msg.value, _msgSender());
     }
 
+    // Function to transfer BNB from this contract to address from sender
     function cancelOfferItem(uint256 _tokenId) onlyInitializing public {
         Item memory item = items[_tokenId];
         ItemOffer memory itemOffer = itemOffers[_tokenId][_msgSender()];
