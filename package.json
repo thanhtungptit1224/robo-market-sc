@@ -5,6 +5,8 @@
     "@openzeppelin/contracts": "^4.5.0",
     "@openzeppelin/contracts-upgradeable": "^4.5.0",
     "@openzeppelin/truffle-upgrades": "^1.12.0",
-    "@truffle/hdwallet-provider": "^2.0.3"
+    "@truffle/hdwallet-provider": "^2.0.3",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1"
   }
 }
