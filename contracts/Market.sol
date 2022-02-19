@@ -108,7 +108,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         IERC721Upgradeable nft  = IERC721Upgradeable(nftAddress);
         Item memory item        = items[_tokenId];
 
-        require(item.tokenId != 0, "Asset not published");
+        require(item.tokenId > 0, "Asset not published");
         require(
             item.owner == nft.ownerOf(_tokenId),
             "The seller is no longer the owner"
@@ -129,8 +129,8 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
 
     // Function to transfer BNB from this contract to address from sender
     function cancelOfferItem(uint256 _tokenId) onlyInitializing public {
-        Item memory item = items[_tokenId];
-        ItemOffer memory itemOffer = itemOffers[_tokenId][_msgSender()];
+        Item memory item            = items[_tokenId];
+        ItemOffer memory itemOffer  = itemOffers[_tokenId][_msgSender()];
 
         require(item.id > 0, "Asset not published");
         require(itemOffer.offerBy == _msgSender(), "You're not offer item");
