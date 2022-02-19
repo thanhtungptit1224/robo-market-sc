@@ -73,5 +73,22 @@ contract("Market", async (accounts) => {
             assert.equal(item.owner, accounts[1])
             assert.equal(item.status.toString(), '1')
         })
+
+        it("2.3 Sell Item", async () => {
+            // await nft.approve(market.address, tokenId, {from: accounts[0]})
+            // await market.list(tokenId, web3.utils.toWei('0.1', 'ether'))
+            // await market.buyItem(tokenId, {from: accounts[1], value: web3.utils.toWei('0.1', 'ether')})
+
+            // Fail
+            await market.sellItem(tokenId, web3.utils.toWei('0.2', 'ether'),{from: accounts[0]}).should.be.rejected;
+            await market.sellItem(tokenId, web3.utils.toWei('0', 'ether'),{from: accounts[1]}).should.be.rejected;
+
+            // Success
+            await market.sellItem(tokenId, web3.utils.toWei('0.2', 'ether'),{from: accounts[1]});
+            const item = await market.items(tokenId)
+
+            assert.equal(item.price, web3.utils.toWei('0.2', 'ether'))
+            assert.equal(item.status.toString(), '0')
+        })
     })
 });
