@@ -162,7 +162,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
 
         delete itemOffers[_tokenId][_offerBy];
 
-        emit ApproveOfferItem(_tokenId, seller, offerItem.price, _offerBy);
+        emit ApproveOfferItem(_tokenId, item.owner, offerItem.price, _offerBy);
     }
 
 }

@@ -72,10 +72,10 @@ contract Storage {
         address indexed offerBy
     );
     event ApproveOfferItem(
-        uint256 indexed tokenID,
+        uint256 indexed tokenId,
         address indexed seller,
-        uint256 totalPrice,
-        address indexed buyer
+        uint256 price,
+        address indexed offerBy
     );
     event ChangeLegacyNFTAddress(address indexed legacyNFTAddress);
 }
