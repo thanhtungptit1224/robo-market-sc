@@ -143,8 +143,8 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
     }
 
     function approveOfferItem(uint256 _tokenId, address _offerBy) onlyInitializing public {
-        IERC721Upgradeable nft      = IERC721Upgradeable(nftAddress);
-        Item memory item            = items[_tokenId];
+        IERC721Upgradeable nft     = IERC721Upgradeable(nftAddress);
+        Item memory item           = items[_tokenId];
         ItemOffer memory offerItem = itemOffers[_tokenId][_offerBy];
 
         require(item.id > 0, "Asset not published");

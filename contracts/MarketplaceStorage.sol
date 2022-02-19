@@ -29,13 +29,11 @@ contract MarketplaceStorage {
     }
 
     // From ERC721 registry assetId to Item (to avoid asset collision)
-//    mapping(address => mapping(uint256 => Item)) public items;
     mapping(uint256 => Item) items;
 
     // From ERC721 registry assetId to Offer (to avoid asset collision)
     mapping(uint256 => mapping(address => ItemOffer)) public itemOffers;
 
-    address public legacyNFTAddress;
     address public nftAddress;
 
     bytes4 public constant ERC721_Interface = bytes4(0x80ac58cd);
