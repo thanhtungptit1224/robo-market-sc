@@ -19,10 +19,8 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
     }
 
     function validateNftAddress(address _nftAddress) internal view {
-        require(_nftAddress.isContract(), "The NFT Address should be a contract");
-
+        require(_nftAddress.code.length > 0, "The NFT Address should be a contract");
         IERC721Upgradeable nft = IERC721Upgradeable(_nftAddress);
-
         require(nft.supportsInterface(ERC721_Interface), "The NFT contract has an invalid ERC721 implementation");
     }
 
