@@ -80,15 +80,26 @@ contract("Market", async (accounts) => {
             // await market.buyItem(tokenId, {from: accounts[1], value: web3.utils.toWei('0.1', 'ether')})
 
             // Fail
-            await market.sellItem(tokenId, web3.utils.toWei('0.2', 'ether'),{from: accounts[0]}).should.be.rejected;
-            await market.sellItem(tokenId, web3.utils.toWei('0', 'ether'),{from: accounts[1]}).should.be.rejected;
+            await market.sellItem(tokenId, web3.utils.toWei('0.2', 'ether'), {from: accounts[0]}).should.be.rejected;
+            await market.sellItem(tokenId, web3.utils.toWei('0', 'ether'), {from: accounts[1]}).should.be.rejected;
 
             // Success
-            await market.sellItem(tokenId, web3.utils.toWei('0.2', 'ether'),{from: accounts[1]});
+            await market.sellItem(tokenId, web3.utils.toWei('0.2', 'ether'), {from: accounts[1]});
             const item = await market.items(tokenId)
 
             assert.equal(item.price, web3.utils.toWei('0.2', 'ether'))
             assert.equal(item.status.toString(), '0')
+        })
+
+        it("2.4 UnList item", async () => {
+            // Fail
+            await market.unListItem(tokenId, {from: accounts[0]}).should.be.rejected;
+
+            // Success
+            await market.unListItem(tokenId, {from: accounts[1]})
+            const item = await market.items(tokenId)
+
+            assert.equal(item.status.toString(), '3')
         })
     })
 });

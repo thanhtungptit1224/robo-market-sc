@@ -84,7 +84,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
         emit SellItem(_msgSender(), _tokenId, _price);
     }
 
-    function unListItem(uint256 _tokenId) onlyInitializing public {
+    function unListItem(uint256 _tokenId) public {
         IERC721Upgradeable nft = IERC721Upgradeable(nftAddress);
         Item memory item       = items[_tokenId];
 
