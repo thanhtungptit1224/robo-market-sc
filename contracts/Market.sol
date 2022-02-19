@@ -117,10 +117,26 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
 
         itemOffers[_tokenId][_msgSender()] = ItemOffer({
             tokenId: _tokenId,
-            price: _price
+            price  : _price,
+            offerBy: _msgSender()
         });
 
         emit OfferItem(_tokenId, item.owner, _price, _msgSender());
     }
+
+    function cancelOfferItem(uint256 _tokenId) onlyInitializing public {
+        Item memory item = items[_tokenId];
+        ItemOffer memory itemOffer = itemOffers[_tokenId][_msgSender()];
+
+        require(item.id > 0, "Asset not published");
+        require(itemOffer.offerBy == _msgSender(), "You're not offer item");
+
+        payable(_msgSender()).transfer(itemOffer.price);
+
+        delete itemOffers[_tokenId][_msgSender()];
+
+        emit CancelOfferItem(_tokenId, item.seller, itemOffer.price, _msgSender());
+    }
+
 
 }

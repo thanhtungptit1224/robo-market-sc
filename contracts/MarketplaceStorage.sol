@@ -25,6 +25,7 @@ contract MarketplaceStorage {
         uint256 tokenId;
         // Price (in wei) for the published item
         uint256 price;
+        address offerBy;
     }
 
     // From ERC721 registry assetId to Item (to avoid asset collision)
@@ -74,13 +75,11 @@ contract MarketplaceStorage {
         uint256 price,
         address indexed offerBy
     );
-    event ItemOfferCanceled(
-        bytes32 id,
-        uint256 indexed assetId,
+    event CancelOfferItem(
+        uint256 indexed tokenId,
         address indexed seller,
-        address nftAddress,
-        uint256 offerPrice,
-        address indexed offerer
+        uint256 price,
+        address indexed offerBy
     );
     event ChangeLegacyNFTAddress(address indexed legacyNFTAddress);
 }
