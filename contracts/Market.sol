@@ -73,7 +73,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         Item memory item        = items[_tokenId];
 
         require(_price > 0, "Price should be bigger than 0");
-        require(item.tokenId != 0, "Asset not published");
+        require(item.tokenId == ItemStatus.BOUGHT || item.tokenId == ItemStatus.UN_LIST, "NFT is not ready to sell");
         require(
             nft.ownerOf(_tokenId) == _msgSender(),
             "The seller is no longer the owner"
