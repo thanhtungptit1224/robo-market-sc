@@ -142,5 +142,27 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         emit CancelOfferItem(_tokenId, item.seller, itemOffer.price, _msgSender());
     }
 
+    function approveOfferItem(uint256 _tokenId, address _offerBy) onlyInitializing public {
+        IERC721Upgradeable nft      = IERC721Upgradeable(nftAddress);
+        Item memory item            = items[_tokenId];
+        ItemOffer memory offerItem = itemOffers[_tokenId][_offerBy];
+
+        require(item.id > 0, "Asset not published");
+        require(
+            item.owner == msg.sender && item.owner == nft.ownerOf(_tokenId),
+            "The seller is no longer the owner"
+        );
+
+        payable(item.owner).transfer(offerItem.price);
+        nft.safeTransferFrom(item.owner, _offerBy, _tokenId);
+
+        items[_tokenId].owner  = _offerBy;
+        items[_tokenId].status = ItemStatus.BOUGHT;
+        items[_tokenId].price  = offerItem.price;
+
+        delete itemOffers[_tokenId][_offerBy];
+
+        emit ApproveOfferItem(_tokenId, seller, offerItem.price, _offerBy);
+    }
 
 }

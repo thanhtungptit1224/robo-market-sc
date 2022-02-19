@@ -61,14 +61,6 @@ contract MarketplaceStorage {
         address indexed unListBy,
         uint256 indexed tokenId
     );
-    event ItemOfferApproved(
-        bytes32 id,
-        uint256 indexed assetId,
-        address indexed seller,
-        address nftAddress,
-        uint256 totalPrice,
-        address indexed buyer
-    );
     event OfferItem(
         uint256 indexed tokenId,
         address indexed seller,
@@ -80,6 +72,12 @@ contract MarketplaceStorage {
         address indexed seller,
         uint256 price,
         address indexed offerBy
+    );
+    event ApproveOfferItem(
+        uint256 indexed tokenID,
+        address indexed seller,
+        uint256 totalPrice,
+        address indexed buyer
     );
     event ChangeLegacyNFTAddress(address indexed legacyNFTAddress);
 }
