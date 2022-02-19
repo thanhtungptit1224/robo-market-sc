@@ -29,7 +29,7 @@ contract Storage {
     }
 
     // From ERC721 registry assetId to Item (to avoid asset collision)
-    mapping(uint256 => Item) items;
+    mapping(uint256 => Item) public items;
 
     // From ERC721 registry assetId to Offer (to avoid asset collision)
     mapping(uint256 => mapping(address => ItemOffer)) public itemOffers;

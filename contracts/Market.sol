@@ -25,7 +25,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
     }
 
     // owner listing to other buy. must approve before
-    function list(uint256 _tokenId, uint256 _price) onlyInitializing public {
+    function list(uint256 _tokenId, uint256 _price) public {
         IERC721Upgradeable nft  = IERC721Upgradeable(nftAddress);
         address owner           = nft.ownerOf(_tokenId);
 
