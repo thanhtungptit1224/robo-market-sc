@@ -71,8 +71,8 @@ contract MarketplaceStorage {
     event OfferItem(
         uint256 indexed tokenId,
         address indexed seller,
-        uint256 offerPrice,
-        address indexed offerer
+        uint256 price,
+        address indexed offerBy
     );
     event ItemOfferCanceled(
         bytes32 id,

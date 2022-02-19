@@ -116,7 +116,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Marke
         );
 
         itemOffers[_tokenId][_msgSender()] = ItemOffer({
-            tokenId: item.tokenId,
+            tokenId: _tokenId,
             price: _price
         });
 
