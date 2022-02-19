@@ -9,8 +9,8 @@ before(async () => {
 
 contract("Nft", (accounts) => {
 
-    describe('deployment', async () => {
-        it('deploys successfully', async () => {
+    describe('1. Deployment', async () => {
+        it('1.1 Deploys Successfully', async () => {
             const address = await nft.address
 
             assert.notEqual(address, 0x0)
@@ -19,10 +19,10 @@ contract("Nft", (accounts) => {
             assert.notEqual(address, undefined)
         })
 
-        it("Initial Success", async () => {
-            const name = await nft.name()
+        it("1.2 Initial Success", async () => {
+            const name   = await nft.name()
             const symbol = await nft.symbol()
-            const owner = await nft.owner()
+            const owner  = await nft.owner()
 
             assert.equal(name, "Robox")
             assert.equal(symbol, "RBX")
@@ -30,12 +30,12 @@ contract("Nft", (accounts) => {
         });
     })
 
-    describe('Test Feature', async () => {
-        it("Mint and burn NFT", async () => {
+    describe('2. Test Feature', async () => {
+        it("2.1 Mint and burn NFT", async () => {
             const mintResult = await nft.mint(accounts[0], 'url')
-            const tokenId = mintResult.logs[0].args.tokenId.toNumber()
-            const url = await nft.tokenURI(tokenId)
-            let balance = await nft.balanceOf(accounts[0])
+            const tokenId    = mintResult.logs[0].args.tokenId.toNumber()
+            const url        = await nft.tokenURI(tokenId)
+            let balance      = await nft.balanceOf(accounts[0])
 
             assert.equal(1, tokenId)
             assert.equal(1, balance.toNumber())
