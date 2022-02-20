@@ -102,7 +102,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
     // Function to deposit Ether into this contract.
     // Call this function along with some Ether.
     // The balance of this contract will be automatically updated.
-    function offerItem(uint256 _tokenId) onlyInitializing public payable {
+    function offerItem(uint256 _tokenId) public payable {
         IERC721Upgradeable nft  = IERC721Upgradeable(nftAddress);
         Item memory item        = items[_tokenId];
 
