@@ -71,7 +71,7 @@ contract Storage {
         uint256 price,
         address indexed offerBy
     );
-    event ApproveOfferItem(
+    event AcceptOfferItem(
         uint256 indexed tokenId,
         address indexed seller,
         uint256 price,

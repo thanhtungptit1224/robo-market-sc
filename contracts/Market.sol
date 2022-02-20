@@ -140,19 +140,19 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
         emit CancelOfferItem(_tokenId, item.owner, itemOffer.price, _msgSender());
     }
 
-    function approveOfferItem(uint256 _tokenId, address _offerBy) onlyInitializing public {
+    function acceptOfferItem(uint256 _tokenId, address _offerBy) public {
         IERC721Upgradeable nft     = IERC721Upgradeable(nftAddress);
         Item memory item           = items[_tokenId];
         ItemOffer memory itemOffer = itemOffers[_tokenId][_offerBy];
 
         require(item.tokenId > 0, "Asset not published");
         require(
-            item.owner == msg.sender && item.owner == nft.ownerOf(_tokenId),
+            _msgSender() == nft.ownerOf(_tokenId),
             "The seller is no longer the owner"
         );
 
-        payable(item.owner).transfer(itemOffer.price);
-        nft.safeTransferFrom(item.owner, _offerBy, _tokenId);
+        payable(_msgSender()).transfer(itemOffer.price);
+        nft.safeTransferFrom(_msgSender(), _offerBy, _tokenId);
 
         items[_tokenId].owner  = _offerBy;
         items[_tokenId].status = ItemStatus.BOUGHT;
@@ -160,7 +160,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
 
         delete itemOffers[_tokenId][_offerBy];
 
-        emit ApproveOfferItem(_tokenId, item.owner, itemOffer.price, _offerBy);
+        emit AcceptOfferItem(_tokenId, _msgSender(), itemOffer.price, _offerBy);
     }
 
 }
