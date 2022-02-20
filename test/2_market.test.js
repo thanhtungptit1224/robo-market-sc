@@ -60,7 +60,6 @@ contract("Market", async (accounts) => {
         })
 
         it("2.2 Buy Item", async () => {
-            await nft.approve(market.address, tokenId)
             await market.list(tokenId, web3.utils.toWei('0.1', 'ether'))
 
             // Fail
@@ -75,18 +74,16 @@ contract("Market", async (accounts) => {
         })
 
         it("2.3 Sell Item", async () => {
-            // await nft.approve(market.address, tokenId, {from: accounts[0]})
-            // await market.list(tokenId, web3.utils.toWei('0.1', 'ether'))
-            // await market.buyItem(tokenId, {from: accounts[1], value: web3.utils.toWei('0.1', 'ether')})
-
             // Fail
             await market.sellItem(tokenId, web3.utils.toWei('0.2', 'ether'), {from: accounts[0]}).should.be.rejected;
             await market.sellItem(tokenId, web3.utils.toWei('0', 'ether'), {from: accounts[1]}).should.be.rejected;
 
             // Success
+            await nft.approve(market.address, tokenId, {from: accounts[1]})
             await market.sellItem(tokenId, web3.utils.toWei('0.2', 'ether'), {from: accounts[1]});
             const item = await market.items(tokenId)
 
+            assert.equal(item.owner, accounts[1])
             assert.equal(item.price, web3.utils.toWei('0.2', 'ether'))
             assert.equal(item.status.toString(), '0')
         })
@@ -99,6 +96,7 @@ contract("Market", async (accounts) => {
             await market.unListItem(tokenId, {from: accounts[1]})
             const item = await market.items(tokenId)
 
+            assert.equal(item.owner, accounts[1])
             assert.equal(item.status.toString(), '3')
         })
 
@@ -122,6 +120,25 @@ contract("Market", async (accounts) => {
             // Success
             await market.cancelOfferItem(tokenId, {from: accounts[2]})
             const itemOffer = await market.itemOffers(tokenId, accounts[2]);
+
+            assert.equal(itemOffer.tokenId.toNumber(), 0)
+        })
+
+        it('2.7 Accept Offer Item', async () => {
+            await market.offerItem(tokenId, {from: accounts[2], value: web3.utils.toWei('0.1', 'ether')});
+
+            // Fail
+            await market.acceptOfferItem(tokenId, accounts[2], {from: accounts[3]}).should.be.rejected
+
+            // Success
+            await nft.approve(market.address, tokenId, {from: accounts[1]})
+            await market.acceptOfferItem(tokenId, accounts[2], {from: accounts[1]})
+            const item = await market.items(tokenId)
+            const itemOffer = await market.itemOffers(tokenId, accounts[2])
+
+            assert.equal(item.owner, accounts[2])
+            assert.equal(item.price, web3.utils.toWei('0.1', 'ether'))
+            assert.equal(item.status.toString(), '1')
 
             assert.equal(itemOffer.tokenId.toNumber(), 0)
         })
