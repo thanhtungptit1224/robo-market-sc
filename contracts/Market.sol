@@ -126,7 +126,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
     }
 
     // Function to transfer BNB from this contract to address from sender
-    function cancelOfferItem(uint256 _tokenId) onlyInitializing public {
+    function cancelOfferItem(uint256 _tokenId) public {
         Item memory item            = items[_tokenId];
         ItemOffer memory itemOffer  = itemOffers[_tokenId][_msgSender()];
 

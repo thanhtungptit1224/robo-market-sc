@@ -114,5 +114,16 @@ contract("Market", async (accounts) => {
             assert.equal(itemOffer.price, web3.utils.toWei('0.1', 'ether'))
             assert.equal(itemOffer.offerBy, accounts[2])
         })
+
+        it("2.6 Cancel Offer Item", async () => {
+            // Fail
+            await market.cancelOfferItem(tokenId, {from: accounts[3]}).should.be.rejected;
+
+            // Success
+            await market.cancelOfferItem(tokenId, {from: accounts[2]})
+            const itemOffer = await market.itemOffers(tokenId, accounts[2]);
+
+            assert.equal(itemOffer.tokenId.toNumber(), 0)
+        })
     })
 });
