@@ -26,6 +26,12 @@ const privateKeyTestnet = fs.readFileSync(".private_key.testnet").toString().tri
 const privateKeyMainnet = fs.readFileSync(".private_key.mainnet").toString().trim();
 
 module.exports = {
+    plugins: [
+        'truffle-plugin-verify'
+    ],
+    api_keys: {
+        bscscan: 'XFVHEZYFXKTWJKGMYG4CSMYTPQ6Z79K4U5'
+    },
     /**
      * Networks define how you connect to your ethereum client and let you set the
      * defaults web3 uses to send transactions. If you don't specify one truffle
