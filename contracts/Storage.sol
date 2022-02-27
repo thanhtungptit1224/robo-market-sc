@@ -77,5 +77,4 @@ contract Storage {
         uint256 price,
         address indexed offerBy
     );
-    event ChangeLegacyNFTAddress(address indexed legacyNFTAddress);
 }
