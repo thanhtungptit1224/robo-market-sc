@@ -71,7 +71,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
         Item memory item        = items[_tokenId];
 
         require(_price > 0, "Price should be bigger than 0");
-        require(item.status == ItemStatus.BOUGHT || item.status == ItemStatus.UN_LIST, "NFT is not ready to sell");
+        require(item.status == ItemStatus.BOUGHT || item.status == ItemStatus.UN_SELL, "NFT is not ready to sell");
         require(
             nft.ownerOf(_tokenId) == _msgSender(),
             "The seller is no longer the owner"
@@ -84,7 +84,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
         emit SellItem(_msgSender(), _tokenId, _price);
     }
 
-    function unListItem(uint256 _tokenId) public {
+    function unSellItem(uint256 _tokenId) public {
         IERC721Upgradeable nft = IERC721Upgradeable(nftAddress);
         Item memory item       = items[_tokenId];
 
@@ -94,7 +94,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
             "The seller is no longer the owner"
         );
 
-        items[_tokenId].status = ItemStatus.UN_LIST;
+        items[_tokenId].status = ItemStatus.UN_SELL;
 
         emit UnSellItem(_msgSender(), _tokenId);
     }

@@ -90,10 +90,10 @@ contract("Market", async (accounts) => {
 
         it("2.4 UnList item", async () => {
             // Fail
-            await market.unListItem(tokenId, {from: accounts[0]}).should.be.rejected;
+            await market.unSellItem(tokenId, {from: accounts[0]}).should.be.rejected;
 
             // Success
-            await market.unListItem(tokenId, {from: accounts[1]})
+            await market.unSellItem(tokenId, {from: accounts[1]})
             const item = await market.items(tokenId)
 
             assert.equal(item.owner, accounts[1])

@@ -6,7 +6,7 @@ contract Storage {
         LIST,
         BOUGHT,
         OFFER,
-        UN_LIST
+        UN_SELL
     }
 
     struct Item {
