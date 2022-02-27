@@ -55,7 +55,7 @@ contract Storage {
         uint256 indexed tokenId,
         uint256 price
     );
-    event UnListItem(
+    event UnSellItem(
         address indexed seller,
         uint256 indexed tokenId
     );

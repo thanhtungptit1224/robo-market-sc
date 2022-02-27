@@ -96,7 +96,7 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
 
         items[_tokenId].status = ItemStatus.UN_LIST;
 
-        emit UnListItem(_msgSender(), _tokenId);
+        emit UnSellItem(_msgSender(), _tokenId);
     }
 
     // Function to deposit Ether into this contract.
