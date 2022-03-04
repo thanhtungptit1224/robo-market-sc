@@ -106,6 +106,7 @@ contract("Market", async (accounts) => {
 
             // Success
             await market.offerItem(tokenId, {from: accounts[2], value: web3.utils.toWei('0.1', 'ether')});
+            await market.offerItem(tokenId, {from: accounts[2], value: web3.utils.toWei('0.2', 'ether')}).should.be.rejected;
             const itemOffer = await market.itemOffers(tokenId, accounts[2]);
 
             assert.equal(itemOffer.tokenId, tokenId)

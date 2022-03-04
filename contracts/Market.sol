@@ -103,9 +103,11 @@ contract Market is Initializable, OwnableUpgradeable, PausableUpgradeable, Stora
     // Call this function along with some Ether.
     // The balance of this contract will be automatically updated.
     function offerItem(uint256 _tokenId) public payable {
-        IERC721Upgradeable nft  = IERC721Upgradeable(nftAddress);
-        Item memory item        = items[_tokenId];
+        IERC721Upgradeable nft     = IERC721Upgradeable(nftAddress);
+        Item memory item           = items[_tokenId];
+        ItemOffer memory itemOffer = itemOffers[_tokenId][_msgSender()];
 
+        require(itemOffer.tokenId == 0, 'Please cancel offer to create new one');
         require(item.tokenId > 0, "Asset not published");
         require(
             item.owner == nft.ownerOf(_tokenId),
